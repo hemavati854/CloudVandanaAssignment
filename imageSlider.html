@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stylish Image Slider</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #2c3e50, #4ca1af);
+            font-family: 'Poppins', sans-serif;
+            color: #fff;
+        }
+        .slider-wrapper {
+            position: relative;
+            max-width: 90%;
+            width: 600px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+            background: #fff;
+        }
+        .slider img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            display: block;
+            border-radius: 15px;
+            transition: transform 0.6s ease-in-out, opacity 0.6s ease-in-out;
+        }
+        .navigation {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .nav-button {
+            background: #ff9800;
+            color: white;
+            border: none;
+            padding: 12px 18px;
+            cursor: pointer;
+            font-size: 18px;
+            border-radius: 25px;
+            transition: 0.4s;
+            margin: 0 10px;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+        .nav-button:hover {
+            background: #e68900;
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <h2>Image Slider</h2>
+    <br>
+    <div class="slider-wrapper">
+        <img id="current-image" src="" alt="Image Slider">
+    </div>
+    <div class="navigation">
+        <button class="nav-button" onclick="previousSlide()">&#10094; Previous</button>
+        <button class="nav-button" onclick="nextSlide()">Next &#10095;</button>
+    </div>
+
+    <script>
+        const imageGallery = [
+        "https://tinyurl.com/2wuywzdv",
+		"https://tinyurl.com/akzdpcur",
+		"https://tinyurl.com/ms9d7hw2",
+        ];
+        
+        let activeIndex = 0;
+        const displayedImage = document.getElementById("current-image");
+        
+        function updateSlide(rotationDirection) {
+            displayedImage.style.opacity = "0";
+            setTimeout(() => {
+                displayedImage.src = imageGallery[activeIndex];
+                displayedImage.style.transform = `rotateY(${rotationDirection}deg)`;
+                displayedImage.style.opacity = "1";
+            }, 300);
+        }
+        
+        function nextSlide() {
+            activeIndex = (activeIndex + 1) % imageGallery.length;
+            updateSlide(360);
+        }
+        
+        function previousSlide() {
+            activeIndex = (activeIndex - 1 + imageGallery.length) % imageGallery.length;
+            updateSlide(-360);
+        }
+        
+        updateSlide(0);
+    </script>
+</body>
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Master</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 50px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+        .task-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            width: 400px;
+            text-align: center;
+            color: #333;
+        }
+        input {
+            width: 75%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: none;
+            border-radius: 5px;
+            outline: none;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+        }
+        .add-btn {
+            background-color: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        .add-btn:hover {
+            background-color: #ff4757;
+            transform: scale(1.05);
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin-top: 10px;
+        }
+        li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f1f1f1;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            transition: transform 0.2s;
+        }
+        li:hover {
+            transform: scale(1.02);
+        }
+        .delete-btn {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 6px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .delete-btn:hover {
+            background-color: #c0392b;
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="task-container">
+        <h2>Task Master</h2>
+        <input type="text" id="taskField" placeholder="Enter a task">
+        <button class="add-btn" onclick="createTask()">Add Task</button>
+        <ul id="taskBoard"></ul>
+    </div>
+
+    <script>
+        function createTask() {
+            let taskField = document.getElementById("taskField");
+            let taskValue = taskField.value.trim();
+            if (taskValue === "") return;
+            
+            let taskItem = document.createElement("li");
+            taskItem.textContent = taskValue;
+            
+            let deleteButton = document.createElement("button");
+            deleteButton.textContent = "Remove";
+            deleteButton.classList.add("delete-btn");
+            deleteButton.onclick = function () {
+                taskItem.remove();
+            };
+            
+            taskItem.appendChild(deleteButton);
+            document.getElementById("taskBoard").appendChild(taskItem);
+            taskField.value = "";
+        }
+    </script>
+</body>
+</html>
