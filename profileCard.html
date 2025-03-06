@@ -1,109 +1,367 @@
 <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Profile Card</title>
-        <style>
-            * {
-                margin: 0;
-                padding: 0;
-                box-sizing: border-box;
-                font-family: 'Poppins', sans-serif;
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Card</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: #0f0c29;
+            background: linear-gradient(to right, #24243e, #302b63, #0f0c29);
+            padding: 20px;
+        }
+
+        .container {
+            position: relative;
+            width: 100%;
+            max-width: 450px;
+            perspective: 1000px;
+            transition: transform 0.6s ease-out;
+        }
+
+        .container:hover {
+            transform: translateY(-10px) scale(1.02);
+        }
+
+        .card {
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.6s ease;
+            border-radius: 16px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+        }
+
+        .container:hover .card {
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.7);
+        }
+
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: all 0.5s ease;
+            overflow: hidden;
+        }
+
+        .card-inner:before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            opacity: 0;
+            transition: opacity 0.8s ease;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container:hover .card-inner:before {
+            opacity: 1;
+            animation: rotate-gradient 8s linear infinite;
+        }
+
+        @keyframes rotate-gradient {
+            0% {
+                transform: rotate(0deg);
             }
-    
-            body {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                height: 100vh;
-                background: linear-gradient(135deg, #1E2A47, #3A5371);
-                padding: 20px;
+            100% {
+                transform: rotate(360deg);
             }
-    
-            .card {
-                background: linear-gradient(135deg, #ffffff, #e6e9f0);
-                width: 90%;
-                max-width: 400px;
+        }
+
+        .container:hover .card-inner {
+            border-color: rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .card-header {
+            position: relative;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            padding-bottom: 25px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .profile-img-container {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            border: 3px solid #6a3093;
+            transition: transform 0.5s ease, box-shadow 0.5s ease, border 0.3s ease;
+        }
+
+        .profile-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .profile-img-container:hover {
+            transform: rotate(5deg);
+            box-shadow: 0 8px 25px rgba(106, 48, 147, 0.6);
+            border: 3px solid #a044ff;
+        }
+
+        .profile-img-container:hover .profile-img {
+            transform: scale(1.15) rotate(-5deg);
+        }
+
+        .container:hover .profile-img-container {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            }
+            50% {
+                box-shadow: 0 5px 30px rgba(160, 68, 255, 0.6);
+            }
+            100% {
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            }
+        }
+
+        .profile-info {
+            flex: 1;
+        }
+
+        .name {
+            font-size: 28px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 5px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .designation {
+            font-size: 16px;
+            color: #e0e0e0;
+            font-weight: 500;
+            background: linear-gradient(to right, #6a3093, #a044ff);
+            padding: 5px 12px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-top: 5px;
+        }
+
+        .card-body {
+            width: 100%;
+            padding: 25px 0;
+            text-align: left;
+        }
+
+        .bio {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #e0e0e0;
+            margin-bottom: 25px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            border-left: 4px solid #a044ff;
+            transition: all 0.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bio:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(to right, #6a3093, #a044ff);
+            transition: width 0.8s ease;
+        }
+
+        .container:hover .bio {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .container:hover .bio:after {
+            width: 100%;
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% {
+                opacity: 0.5;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0.5;
+            }
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            padding: 0 10px;
+        }
+
+        .social-icons a {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 20px;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            margin: 0 5px;
+        }
+
+        .social-icons a:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #6a3093, #a044ff);
+            z-index: -1;
+            transform: scale(0);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border-radius: 50%;
+        }
+
+        .social-icons a:hover {
+            transform: translateY(-8px) scale(1.15);
+            box-shadow: 0 10px 20px rgba(106, 48, 147, 0.6);
+            color: #ffffff;
+        }
+
+        .social-icons a:hover:before {
+            transform: scale(1);
+            animation: rotate 2s linear infinite;
+        }
+
+        .container:hover .social-icons a {
+            animation: bounce 2s infinite;
+            animation-delay: calc(0.1s * var(--i));
+        }
+
+        .social-icons a:nth-child(1) { --i: 1; }
+        .social-icons a:nth-child(2) { --i: 2; }
+        .social-icons a:nth-child(3) { --i: 3; }
+        .social-icons a:nth-child(4) { --i: 4; }
+        .social-icons a:nth-child(5) { --i: 5; }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-5px);
+            }
+            60% {
+                transform: translateY(-3px);
+            }
+        }
+
+        @keyframes rotate {
+            0% {
+                background: linear-gradient(45deg, #6a3093, #a044ff);
+            }
+            50% {
+                background: linear-gradient(225deg, #6a3093, #a044ff);
+            }
+            100% {
+                background: linear-gradient(45deg, #6a3093, #a044ff);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .card-header {
+                flex-direction: column;
                 text-align: center;
-                padding: 25px;
-                border-radius: 20px;
-                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-                transition: transform 0.4s ease-in-out, box-shadow 0.4s;
-                position: relative;
             }
-    
-            .card:hover {
-                transform: scale(1.05);
-                box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+
+            .profile-img-container {
+                margin-right: 0;
+                margin-bottom: 20px;
             }
-    
-            .profile-img {
-                width: 110px;
-                height: 110px;
-                border-radius: 50%;
-                object-fit: cover;
-                border: 5px solid #007bff;
-                transition: transform 0.4s;
-            }
-    
-            .card:hover .profile-img {
-                transform: rotate(360deg) scale(1.1);
-            }
-    
-            .name {
-                font-size: 24px;
-                font-weight: bold;
-                margin-top: 12px;
-                color: #333;
-            }
-    
-            .designation {
-                font-size: 18px;
-                color: #555;
-                margin-top: 6px;
-                font-weight: 500;
-            }
-    
-            .bio {
-                font-size: 14px;
-                color: #666;
-                margin-top: 12px;
-                font-style: italic;
-            }
-    
+
             .social-icons {
-                margin-top: 18px;
-                display: flex;
+                flex-wrap: wrap;
+                gap: 10px;
                 justify-content: center;
-                gap: 18px;
             }
-    
+
             .social-icons a {
-                color: #007bff;
-                font-size: 24px;
-                transition: transform 0.3s, color 0.3s;
+                width: 45px;
+                height: 45px;
             }
-    
-            .social-icons a:hover {
-                color: #ab1c42;
-                transform: scale(1.3);
-            }
-        </style>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    </head>
+        }
+    </style>
+</head>
 <body>
-    <div class="card">
-        <img src="profilePic.jpg" alt="Profile Picture" class="profile-img">
-        <div class="name">Hemavati Boda</div>
-        <div class="designation">Associate Software Engineer</div>
-        <p class="bio">💻 Passionate about coding, problem-solving, and building scalable solutions. Always learning and innovating! 🚀</p>
-        <div class="social-icons">
-            <a href="https://www.facebook.com/login/?next=https%3A%2F%2Fwww.facebook.com%2F"><i class="fa-brands fa-facebook"></i></a>
-            <a href="https://x.com/i/flow/login"><i class="fa-brands fa-twitter"></i></a>
-            <a href="https://www.linkedin.com/in/hemavati-boda-5b8963182/"><i class="fa-brands fa-linkedin"></i></a>
-            <a href="https://www.instagram.com/accounts/login/?hl=en"><i class="fa-brands fa-instagram"></i></a>
-            <a href="https://github.com/hemavati854"><i class="fa-brands fa-github"></i></a>
+    <div class="container">
+        <div class="card">
+            <div class="card-inner">
+                <div class="card-header">
+                    <div class="profile-img-container">
+                        <img src="profilePic.jpg" alt="Profile Picture" class="profile-img">
+                    </div>
+                    <div class="profile-info">
+                        <h1 class="name">Hemavati Boda</h1>
+                        <span class="designation">Associate Software Engineer</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p class="bio">💻 Passionate about coding, problem-solving, and building scalable solutions. Always learning and innovating! 🚀</p>
+                    <div class="social-icons">
+                        <a href="https://www.facebook.com/login/?next=https%3A%2F%2Fwww.facebook.com%2F" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="https://x.com/i/flow/login" aria-label="Twitter"><i class="fa-brands fa-twitter"></i></a>
+                        <a href="https://www.linkedin.com/in/hemavati-boda-5b8963182/" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+                        <a href="https://www.instagram.com/accounts/login/?hl=en" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="https://github.com/hemavati854" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </body>
